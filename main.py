@@ -20,6 +20,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Mount GraphQL at /graphql (alternative transport, same scoring logic)
+try:
+    from graphql_app import graphql_app
+    app.include_router(graphql_app, prefix="/graphql")
+except ImportError:
+    pass  # GraphQL is optional — REST endpoints work without strawberry installed
+
 # ---------------------------------------------------------------------------
 # Auth
 # ---------------------------------------------------------------------------

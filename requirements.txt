@@ -2,3 +2,12 @@ fastapi==0.115.0
 uvicorn[standard]==0.30.6
 anthropic==0.39.0
 pydantic==2.9.2
+
+# GraphQL transport (optional — the REST API works without it)
+strawberry-graphql[fastapi]>=0.315.3
+
+# LangGraph demo (run langgraph_demo.py standalone)
+langgraph==0.2.50
+
+# Postgres migration (run migrate_to_postgres.py with --apply)
+psycopg[binary]==3.2.3

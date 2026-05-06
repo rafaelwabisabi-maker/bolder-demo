@@ -3,7 +3,13 @@
 A FastAPI service that wraps AI-powered candidate pre-screening with Bearer-token auth and Claude API integration. Extracted from a production executive recruitment system handling 100+ concurrent candidate/client relationships across multiple paying clients.
 
 **Live deploy:** [will-update-after-railway]
-**Companion artifact:** [`CLAUDE.template.md`](./CLAUDE.template.md) — sanitized template of the production CLAUDE.md operator system this service was extracted from.
+
+**Companion artifacts in this repo:**
+- [`CLAUDE.template.md`](./CLAUDE.template.md) — sanitized template of the production CLAUDE.md operator system this service was extracted from
+- [`graphql_app.py`](./graphql_app.py) — same screening logic, GraphQL transport. Mounted at `/graphql`
+- [`postgres_schema.sql`](./postgres_schema.sql) — Postgres / Supabase schema for the parent recruitment system. Includes RLS, audit triggers, indexes
+- [`migrate_to_postgres.py`](./migrate_to_postgres.py) — dry-run-default migration script from per-vaga `candidates.json` files to the Postgres schema
+- [`langgraph_demo.py`](./langgraph_demo.py) — multi-stage candidate triage as a LangGraph state machine (triage → score → decide, with conditional routing)
 
 ---
 
