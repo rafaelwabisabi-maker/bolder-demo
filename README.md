@@ -1,11 +1,14 @@
 # bolder-demo
 
+[![CI](https://github.com/rafaelwabisabi-maker/bolder-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/rafaelwabisabi-maker/bolder-demo/actions/workflows/ci.yml)
+
 A FastAPI service that wraps AI-powered candidate pre-screening with Bearer-token auth and Claude API integration. Extracted from a production executive recruitment system handling 100+ concurrent candidate/client relationships across multiple paying clients.
 
 **Live deploy:** [will-update-after-railway]
 
 **Companion artifacts in this repo:**
 - [`CLAUDE.template.md`](./CLAUDE.template.md) — sanitized template of the production CLAUDE.md operator system this service was extracted from
+- [`SPEC.md`](./SPEC.md) — the spec the agent built `/screen` against, with each acceptance criterion mapped to its test (Spec-Driven Development)
 - [`governance/`](./governance) — the layer that makes agent-written code safe to ship: a `PreToolUse` hook that blocks destructive commands before they run, plus a self-checking proof script
 - [`graphql_app.py`](./graphql_app.py) — same screening logic, GraphQL transport. Mounted at `/graphql`
 - [`postgres_schema.sql`](./postgres_schema.sql) — Postgres / Supabase schema for the parent recruitment system. Includes RLS, audit triggers, indexes
