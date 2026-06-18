@@ -5,12 +5,9 @@ Demonstrates LangGraph fluency with a real domain (recruitment triage), not a to
 Three nodes: triage → score → decide. Each node has explicit inputs/outputs;
 state mutations are auditable. Graph visualization via .get_graph().draw_mermaid().
 
-Why LangGraph here, vs the orchestrator.sh I run in production:
-- orchestrator.sh = bash multi-agent loop with shell-based state
-- LangGraph    = Python state-machine graph with typed state transitions
-The patterns are the same (plan → implement → verify → improve).
-LangGraph is the standard agentic framework reviewers ask for; this file proves
-fluency with it without abandoning the patterns I already run.
+The orchestration patterns mirror the multi-agent loop I run in production
+(plan → implement → verify → improve), expressed here as a typed Python state
+machine: explicit nodes, conditional routing, and auditable state transitions.
 
 Run:
     pip install langgraph anthropic

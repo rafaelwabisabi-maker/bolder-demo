@@ -111,7 +111,12 @@ No markdown, no explanation outside the JSON."""
         max_tokens=512,
         messages=[{"role": "user", "content": prompt}],
     )
-    return json.loads(message.content[0].text.strip())
+    raw = message.content[0].text.strip()
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError as exc:
+        # Surface as a clean GraphQL error instead of an opaque 500.
+        raise ValueError(f"Model did not return valid JSON ({exc}). Raw output: {raw[:500]}")
 
 
 # ---------------------------------------------------------------------------

@@ -127,15 +127,23 @@ No markdown, no explanation outside the JSON."""
 
     import json
     raw = message.content[0].text.strip()
-    data = json.loads(raw)
-
-    return ScreenResult(
-        candidate=payload.candidate_name,
-        fit_score=data["fit_score"],
-        rating=data["rating"],
-        dealbreakers=data.get("dealbreakers", []),
-        strengths=data.get("strengths", []),
-        gaps=data.get("gaps", []),
-        recommendation=data["recommendation"],
-        reasoning=data["reasoning"],
-    )
+    # The model is prompted to return only JSON, but never trust that blindly.
+    # A markdown fence, a preamble, or a refusal must fail as an explicit 502,
+    # not an opaque 500 stack trace.
+    try:
+        data = json.loads(raw)
+        return ScreenResult(
+            candidate=payload.candidate_name,
+            fit_score=data["fit_score"],
+            rating=data["rating"],
+            dealbreakers=data.get("dealbreakers", []),
+            strengths=data.get("strengths", []),
+            gaps=data.get("gaps", []),
+            recommendation=data["recommendation"],
+            reasoning=data["reasoning"],
+        )
+    except (json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Model did not return the expected JSON shape ({exc}). Raw output: {raw[:500]}",
+        )
